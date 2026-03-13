@@ -2,13 +2,13 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "AI-powered gift card message suggester backend",
-  "main": "dist/server.js",
+  "main": "dist/src/server.js",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "npm run build && node dist/src/server.js",
     "build": "tsc",
-    "start": "node dist/server.js",
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "start": "node dist/src/server.js",
+    "test": "npm run build && node dist/tests/run-tests.js",
+    "test:watch": "tsc --watch --preserveWatchOutput"
   },
   "keywords": [
     "node",
