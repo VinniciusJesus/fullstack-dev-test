@@ -3,6 +3,7 @@ import express from 'express';
 import helmet from 'helmet';
 
 import { env } from './config/env.js';
+import { messageSuggesterRouter } from './modules/message-suggester/message-suggester.routes.js';
 
 export const app = express();
 
@@ -24,3 +25,5 @@ app.get('/health', (_request, response) => {
     error: null,
   });
 });
+
+app.use('/api/v1/message-suggestions', messageSuggesterRouter);

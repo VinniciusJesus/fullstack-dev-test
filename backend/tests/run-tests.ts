@@ -1,4 +1,8 @@
 import { runHealthSpec } from './health.spec.js';
+import {
+  runMessageSuggesterInvalidRequestSpec,
+  runMessageSuggesterValidRequestSpec,
+} from './message-suggester.spec.js';
 
 type TestCase = {
   name: string;
@@ -9,6 +13,14 @@ const tests: TestCase[] = [
   {
     name: 'GET /health returns the backend health status',
     run: runHealthSpec,
+  },
+  {
+    name: 'POST /api/v1/message-suggestions returns placeholder suggestions for a valid request',
+    run: runMessageSuggesterValidRequestSpec,
+  },
+  {
+    name: 'POST /api/v1/message-suggestions rejects an invalid request body',
+    run: runMessageSuggesterInvalidRequestSpec,
   },
 ];
 
