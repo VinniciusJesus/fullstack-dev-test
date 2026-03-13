@@ -1,8 +1,12 @@
 import { Request, Response } from 'express';
 
+import { GeminiClient } from '../../providers/llm/gemini.client.js';
 import { messageSuggestionsSchema } from './message-suggester.schema.js';
+import { MessageSuggesterService } from './message-suggester.service.js';
 
-export function createMessageSuggestions(
+const messageSuggesterService = new MessageSuggesterService(new GeminiClient());
+
+export async function createMessageSuggestions(
   request: Request,
   response: Response,
 ) {
@@ -18,14 +22,10 @@ export function createMessageSuggestions(
     });
   }
 
+  const result = await messageSuggesterService.generate(parsedBody.data);
+
   return response.status(200).json({
-    data: {
-      suggestions: [
-        `Warm wishes for your ${parsedBody.data.occasion}.`,
-        `A thoughtful note for your ${parsedBody.data.relationship}.`,
-      ],
-      fallbackUsed: false,
-    },
+    data: result,
     error: null,
   });
 }

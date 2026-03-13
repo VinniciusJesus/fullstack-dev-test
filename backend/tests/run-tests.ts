@@ -3,6 +3,12 @@ import {
   runMessageSuggesterInvalidRequestSpec,
   runMessageSuggesterValidRequestSpec,
 } from './message-suggester.spec.js';
+import {
+  runMessageSuggesterServiceEmptyResponseSpec,
+  runMessageSuggesterServiceInvalidResponseSpec,
+  runMessageSuggesterServiceProviderFailureSpec,
+  runMessageSuggesterServiceSuccessSpec,
+} from './message-suggester.service.spec.js';
 
 type TestCase = {
   name: string;
@@ -21,6 +27,22 @@ const tests: TestCase[] = [
   {
     name: 'POST /api/v1/message-suggestions rejects an invalid request body',
     run: runMessageSuggesterInvalidRequestSpec,
+  },
+  {
+    name: 'MessageSuggesterService returns provider suggestions on success',
+    run: runMessageSuggesterServiceSuccessSpec,
+  },
+  {
+    name: 'MessageSuggesterService uses fallback when the provider fails',
+    run: runMessageSuggesterServiceProviderFailureSpec,
+  },
+  {
+    name: 'MessageSuggesterService uses fallback when the provider returns an empty list',
+    run: runMessageSuggesterServiceEmptyResponseSpec,
+  },
+  {
+    name: 'MessageSuggesterService uses fallback when the provider returns invalid suggestions',
+    run: runMessageSuggesterServiceInvalidResponseSpec,
   },
 ];
 
