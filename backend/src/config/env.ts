@@ -12,6 +12,7 @@ const envSchema = z.object({
   RATE_LIMIT_WINDOW_MS: z.coerce.number().int().positive().default(60_000),
   RATE_LIMIT_MAX: z.coerce.number().int().positive().default(20),
   GEMINI_TIMEOUT_MS: z.coerce.number().int().positive().default(8_000),
+  GEMINI_MODEL: z.string().default('gemini-2.0-flash'),
   CACHE_TTL_SECONDS: z.coerce.number().int().positive().default(300),
   GEMINI_API_KEY: z.string().optional(),
 });

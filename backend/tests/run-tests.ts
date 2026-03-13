@@ -1,5 +1,11 @@
 import { runHealthSpec } from './health.spec.js';
 import {
+  runGeminiClientCodeFenceParserSpec,
+  runGeminiClientHttpErrorSpec,
+  runGeminiClientInvalidPayloadSpec,
+  runGeminiClientSuccessSpec,
+} from './gemini.client.spec.js';
+import {
   runMessageSuggesterInvalidRequestSpec,
   runMessageSuggesterValidRequestSpec,
 } from './message-suggester.spec.js';
@@ -19,6 +25,22 @@ const tests: TestCase[] = [
   {
     name: 'GET /health returns the backend health status',
     run: runHealthSpec,
+  },
+  {
+    name: 'GeminiClient returns normalized suggestions from a valid API response',
+    run: runGeminiClientSuccessSpec,
+  },
+  {
+    name: 'GeminiClient throws for non-success HTTP responses',
+    run: runGeminiClientHttpErrorSpec,
+  },
+  {
+    name: 'GeminiClient throws for malformed Gemini payloads',
+    run: runGeminiClientInvalidPayloadSpec,
+  },
+  {
+    name: 'GeminiClient parses JSON wrapped in code fences',
+    run: runGeminiClientCodeFenceParserSpec,
   },
   {
     name: 'POST /api/v1/message-suggestions returns placeholder suggestions for a valid request',
