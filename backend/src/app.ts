@@ -3,6 +3,7 @@ import express from 'express';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 
+import { isAllowedOrigin } from './config/cors.js';
 import { env } from './config/env.js';
 import { errorHandler } from './middlewares/error-handler.js';
 import { notFoundMiddleware } from './middlewares/not-found.js';
@@ -31,7 +32,14 @@ app.use(requestIdMiddleware);
 app.use(helmet());
 app.use(
   cors({
-    origin: env.ALLOWED_ORIGINS.split(',').map((origin) => origin.trim()),
+    origin: (origin, callback) => {
+      if (isAllowedOrigin(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error('Origin not allowed by CORS.'));
+    },
   }),
 );
 app.use(express.json({ limit: '10kb' }));

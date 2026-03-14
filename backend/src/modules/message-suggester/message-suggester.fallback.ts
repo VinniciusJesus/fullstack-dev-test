@@ -5,11 +5,23 @@ const fallbackSuggestionsByOccasion: Record<string, string[]> = {
     'Feliz aniversario! Desejo um ano cheio de alegria e boas surpresas.',
     'Espero que seu dia especial seja repleto de amor, sorrisos e momentos inesqueciveis.',
   ],
+  aniversario: [
+    'Feliz aniversario! Desejo um ano cheio de alegria e boas surpresas.',
+    'Espero que seu dia especial seja repleto de amor, sorrisos e momentos inesqueciveis.',
+  ],
   wedding: [
     'Desejo a voces uma vida inteira de amor, parceria e felicidade.',
     'Que este novo capitulo traga alegria, harmonia e muitas lembrancas bonitas.',
   ],
+  casamento: [
+    'Desejo a voces uma vida inteira de amor, parceria e felicidade.',
+    'Que este novo capitulo traga alegria, harmonia e muitas lembrancas bonitas.',
+  ],
   'thank you': [
+    'Muito obrigado pelo seu carinho e apoio. Isso significa muito para mim.',
+    'Sou muito grato por tudo o que voce fez. Obrigado pela sua atencao e generosidade.',
+  ],
+  agradecimento: [
     'Muito obrigado pelo seu carinho e apoio. Isso significa muito para mim.',
     'Sou muito grato por tudo o que voce fez. Obrigado pela sua atencao e generosidade.',
   ],

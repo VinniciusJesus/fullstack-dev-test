@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 
 import request from 'supertest';
 
+import { isAllowedOrigin } from '../src/config/cors.js';
 import { env } from '../src/config/env.js';
 import { app } from '../src/app.js';
 
@@ -62,4 +63,9 @@ export async function runRateLimitSpec() {
       message: 'Too many requests. Please try again later.',
     },
   });
+}
+
+export async function runCorsDevelopmentOriginSpec() {
+  assert.equal(isAllowedOrigin('http://localhost:54321'), true);
+  assert.equal(isAllowedOrigin('http://127.0.0.1:5173'), true);
 }

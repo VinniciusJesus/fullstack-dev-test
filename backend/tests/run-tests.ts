@@ -1,4 +1,5 @@
 import {
+  runCorsDevelopmentOriginSpec,
   runNotFoundSpec,
   runRateLimitSpec,
   runRequestIdPassthroughSpec,
@@ -38,6 +39,10 @@ const tests: TestCase[] = [
   {
     name: 'Responses expose a supplied request id header',
     run: runRequestIdPassthroughSpec,
+  },
+  {
+    name: 'Development CORS accepts localhost and 127.0.0.1 on dynamic ports',
+    run: runCorsDevelopmentOriginSpec,
   },
   {
     name: 'Unknown routes return a standardized not found response',
