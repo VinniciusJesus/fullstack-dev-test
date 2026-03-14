@@ -1,3 +1,9 @@
+import {
+  runNotFoundSpec,
+  runRateLimitSpec,
+  runRequestIdPassthroughSpec,
+  runUnhandledErrorSpec,
+} from './app-security.spec.js';
 import { runHealthSpec } from './health.spec.js';
 import {
   runGeminiClientCodeFenceParserSpec,
@@ -25,6 +31,18 @@ const tests: TestCase[] = [
   {
     name: 'GET /health returns the backend health status',
     run: runHealthSpec,
+  },
+  {
+    name: 'Responses expose a supplied request id header',
+    run: runRequestIdPassthroughSpec,
+  },
+  {
+    name: 'Unknown routes return a standardized not found response',
+    run: runNotFoundSpec,
+  },
+  {
+    name: 'Unhandled errors return a standardized internal error response',
+    run: runUnhandledErrorSpec,
   },
   {
     name: 'GeminiClient returns normalized suggestions from a valid API response',
@@ -65,6 +83,10 @@ const tests: TestCase[] = [
   {
     name: 'MessageSuggesterService uses fallback when the provider returns invalid suggestions',
     run: runMessageSuggesterServiceInvalidResponseSpec,
+  },
+  {
+    name: 'API rate limiting returns a standardized error response',
+    run: runRateLimitSpec,
   },
 ];
 

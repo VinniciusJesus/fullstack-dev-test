@@ -8,6 +8,7 @@ export async function runHealthSpec() {
   const response = await request(app).get('/health');
 
   assert.equal(response.status, 200);
+  assert.equal(typeof response.headers['x-request-id'], 'string');
   assert.deepEqual(response.body, {
     data: {
       status: 'ok',
