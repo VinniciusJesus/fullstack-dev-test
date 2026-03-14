@@ -73,7 +73,10 @@ export async function runMessageSuggesterServiceProviderFailureSpec() {
   });
 
   assert.equal(result.fallbackUsed, true);
-  assert.equal(result.suggestions.length, 2);
+  assert.deepEqual(result.suggestions, [
+    'Feliz aniversario! Desejo um ano cheio de alegria e boas surpresas.',
+    'Espero que seu dia especial seja repleto de amor, sorrisos e momentos inesqueciveis.',
+  ]);
 }
 
 export async function runMessageSuggesterServiceEmptyResponseSpec() {

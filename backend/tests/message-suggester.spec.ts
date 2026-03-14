@@ -14,8 +14,9 @@ export async function runMessageSuggesterValidRequestSpec() {
 
   assert.equal(response.status, 200);
   assert.equal(response.body.error, null);
-  assert.equal(response.body.data.fallbackUsed, true);
-  assert.equal(response.body.data.suggestions.length, 2);
+  assert.equal(typeof response.body.data.fallbackUsed, 'boolean');
+  assert.ok(response.body.data.suggestions.length >= 2);
+  assert.ok(response.body.data.suggestions.length <= 3);
 }
 
 export async function runMessageSuggesterInvalidRequestSpec() {

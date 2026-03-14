@@ -120,3 +120,13 @@ export async function runGeminiClientCodeFenceParserSpec() {
 
   assert.deepEqual(suggestions, ['Message one.', 'Message two.']);
 }
+
+export async function runGeminiClientPromptLanguageSpec() {
+  const prompt = geminiClientInternals.buildPrompt({
+    occasion: 'birthday',
+    relationship: 'friend',
+  });
+
+  assert.match(prompt, /portugues do Brasil/i);
+  assert.match(prompt, /Retorne 2 ou 3 sugestoes/);
+}

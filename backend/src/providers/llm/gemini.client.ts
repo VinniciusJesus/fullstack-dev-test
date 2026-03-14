@@ -57,6 +57,22 @@ function parseSuggestionsFromText(text: string): string[] {
   return suggestions;
 }
 
+function buildPrompt(input: GenerateSuggestionsInput): string {
+  return [
+    'Gere mensagens curtas para cartao presente.',
+    'Responda em portugues do Brasil.',
+    'Retorne apenas JSON usando exatamente este formato:',
+    '{"suggestions":["mensagem 1","mensagem 2"]}',
+    'Regras:',
+    '- Retorne 2 ou 3 sugestoes',
+    '- Cada sugestao deve ter 1 ou 2 frases curtas',
+    '- Mantenha um tom caloroso, natural e apropriado para um cartao presente',
+    '- Nao inclua numeracao nem explicacao extra',
+    `Occasion: ${input.occasion}`,
+    `Relationship: ${input.relationship}`,
+  ].join('\n');
+}
+
 export class GeminiClient implements LlmProvider {
   private readonly apiUrl: string;
 
@@ -88,7 +104,7 @@ export class GeminiClient implements LlmProvider {
               role: 'user',
               parts: [
                 {
-                  text: this.buildPrompt(input),
+                  text: buildPrompt(input),
                 },
               ],
             },
@@ -119,24 +135,10 @@ export class GeminiClient implements LlmProvider {
       clearTimeout(timeout);
     }
   }
-
-  private buildPrompt(input: GenerateSuggestionsInput): string {
-    return [
-      'Generate short gift card messages.',
-      'Return JSON only using this exact format:',
-      '{"suggestions":["message 1","message 2"]}',
-      'Rules:',
-      '- Return 2 or 3 suggestions',
-      '- Each suggestion must be 1 or 2 short sentences',
-      '- Keep the tone warm, natural, and appropriate for a gift card',
-      '- Do not include numbering or extra explanation',
-      `Occasion: ${input.occasion}`,
-      `Relationship: ${input.relationship}`,
-    ].join('\n');
-  }
 }
 
 export const geminiClientInternals = {
+  buildPrompt,
   extractTextFromGeminiResponse,
   parseSuggestionsFromText,
   stripCodeFence,

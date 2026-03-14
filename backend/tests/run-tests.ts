@@ -9,6 +9,7 @@ import {
   runGeminiClientCodeFenceParserSpec,
   runGeminiClientHttpErrorSpec,
   runGeminiClientInvalidPayloadSpec,
+  runGeminiClientPromptLanguageSpec,
   runGeminiClientSuccessSpec,
 } from './gemini.client.spec.js';
 import {
@@ -61,6 +62,10 @@ const tests: TestCase[] = [
   {
     name: 'GeminiClient parses JSON wrapped in code fences',
     run: runGeminiClientCodeFenceParserSpec,
+  },
+  {
+    name: 'GeminiClient prompt requires Brazilian Portuguese output',
+    run: runGeminiClientPromptLanguageSpec,
   },
   {
     name: 'POST /api/v1/message-suggestions returns placeholder suggestions for a valid request',

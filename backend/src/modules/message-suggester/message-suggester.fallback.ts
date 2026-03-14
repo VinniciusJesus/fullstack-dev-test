@@ -2,22 +2,22 @@ import { MessageSuggestionsInput } from './message-suggester.schema.js';
 
 const fallbackSuggestionsByOccasion: Record<string, string[]> = {
   birthday: [
-    'Happy birthday! Wishing you a year full of joy and good surprises.',
-    'Hope your special day is filled with love, laughter, and memorable moments.',
+    'Feliz aniversario! Desejo um ano cheio de alegria e boas surpresas.',
+    'Espero que seu dia especial seja repleto de amor, sorrisos e momentos inesqueciveis.',
   ],
   wedding: [
-    'Wishing you both a lifetime of love, partnership, and happiness.',
-    'May this new chapter bring joy, harmony, and many beautiful memories.',
+    'Desejo a voces uma vida inteira de amor, parceria e felicidade.',
+    'Que este novo capitulo traga alegria, harmonia e muitas lembrancas bonitas.',
   ],
   'thank you': [
-    'Thank you so much for your kindness and support. It truly means a lot.',
-    'I am very grateful for everything you have done. Thank you for being so thoughtful.',
+    'Muito obrigado pelo seu carinho e apoio. Isso significa muito para mim.',
+    'Sou muito grato por tudo o que voce fez. Obrigado pela sua atencao e generosidade.',
   ],
 };
 
 const genericFallbackSuggestions = [
-  'Wishing you all the best and hoping this message brings a smile to your day.',
-  'Sending warm thoughts and heartfelt wishes for this special moment.',
+  'Desejo tudo de melhor e espero que esta mensagem traga um sorriso ao seu dia.',
+  'Envio votos sinceros e muito carinho para este momento especial.',
 ];
 
 export function buildFallbackSuggestions(
