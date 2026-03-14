@@ -2,9 +2,14 @@ import assert from 'node:assert/strict';
 
 import { MessageSuggesterService } from '../src/modules/message-suggester/message-suggester.service.js';
 import { LlmProvider } from '../src/providers/llm/llm.types.js';
+import { CacheStore } from '../src/utils/cache.js';
 
 class SuccessfulProviderStub implements LlmProvider {
+  public callCount = 0;
+
   async generateSuggestions(): Promise<string[]> {
+    this.callCount += 1;
+
     return [
       'Happy birthday! Hope your day is amazing.',
       'Wishing you laughter, love, and great memories.',
@@ -27,6 +32,18 @@ class EmptyProviderStub implements LlmProvider {
 class InvalidProviderStub implements LlmProvider {
   async generateSuggestions(): Promise<string[]> {
     return [''];
+  }
+}
+
+class MemoryCacheStub<T> implements CacheStore<T> {
+  private readonly store = new Map<string, T>();
+
+  get(key: string): T | null {
+    return this.store.get(key) ?? null;
+  }
+
+  set(key: string, value: T): void {
+    this.store.set(key, value);
   }
 }
 
@@ -81,4 +98,42 @@ export async function runMessageSuggesterServiceInvalidResponseSpec() {
 
   assert.equal(result.fallbackUsed, true);
   assert.equal(result.suggestions.length, 2);
+}
+
+export async function runMessageSuggesterServiceCacheHitSpec() {
+  const provider = new SuccessfulProviderStub();
+  const cache = new MemoryCacheStub<{
+    suggestions: string[];
+    fallbackUsed: boolean;
+  }>();
+  const service = new MessageSuggesterService(provider, cache, 300);
+
+  const firstResult = await service.generate({
+    occasion: 'Birthday',
+    relationship: 'Friend',
+  });
+
+  const secondResult = await service.generate({
+    occasion: ' birthday ',
+    relationship: ' friend ',
+  });
+
+  assert.equal(provider.callCount, 1);
+  assert.deepEqual(secondResult, firstResult);
+}
+
+export async function runMessageSuggesterServiceDoesNotCacheFallbackSpec() {
+  const cache = new MemoryCacheStub<{
+    suggestions: string[];
+    fallbackUsed: boolean;
+  }>();
+  const service = new MessageSuggesterService(new FailingProviderStub(), cache, 300);
+
+  const result = await service.generate({
+    occasion: 'birthday',
+    relationship: 'friend',
+  });
+
+  assert.equal(result.fallbackUsed, true);
+  assert.equal(cache.get('birthday::friend'), null);
 }

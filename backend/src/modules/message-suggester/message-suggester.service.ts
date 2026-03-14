@@ -1,4 +1,6 @@
 import { LlmProvider } from '../../providers/llm/llm.types.js';
+import { CacheStore, InMemoryCacheStore } from '../../utils/cache.js';
+import { env } from '../../config/env.js';
 
 import { buildFallbackSuggestions } from './message-suggester.fallback.js';
 import { MessageSuggestionsInput } from './message-suggester.schema.js';
@@ -15,11 +17,22 @@ function isValidSuggestionsList(suggestions: string[]): boolean {
 }
 
 export class MessageSuggesterService {
-  constructor(private readonly llmProvider: LlmProvider) {}
+  constructor(
+    private readonly llmProvider: LlmProvider,
+    private readonly cache: CacheStore<MessageSuggestionsResponse> = new InMemoryCacheStore<MessageSuggestionsResponse>(),
+    private readonly cacheTtlSeconds = env.CACHE_TTL_SECONDS,
+  ) {}
 
   async generate(
     input: MessageSuggestionsInput,
   ): Promise<MessageSuggestionsResponse> {
+    const cacheKey = buildCacheKey(input);
+    const cachedResponse = this.cache.get(cacheKey);
+
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+
     try {
       const suggestions = await this.llmProvider.generateSuggestions(input);
 
@@ -30,10 +43,14 @@ export class MessageSuggesterService {
         };
       }
 
-      return {
+      const response = {
         suggestions: suggestions.map((suggestion) => suggestion.trim()),
         fallbackUsed: false,
       };
+
+      this.cache.set(cacheKey, response, this.cacheTtlSeconds);
+
+      return response;
     } catch {
       return {
         suggestions: buildFallbackSuggestions(input),
@@ -42,3 +59,11 @@ export class MessageSuggesterService {
     }
   }
 }
+
+function buildCacheKey(input: MessageSuggestionsInput): string {
+  return `${input.occasion.trim().toLowerCase()}::${input.relationship.trim().toLowerCase()}`;
+}
+
+export const messageSuggesterServiceInternals = {
+  buildCacheKey,
+};

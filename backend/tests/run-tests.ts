@@ -16,6 +16,8 @@ import {
   runMessageSuggesterValidRequestSpec,
 } from './message-suggester.spec.js';
 import {
+  runMessageSuggesterServiceCacheHitSpec,
+  runMessageSuggesterServiceDoesNotCacheFallbackSpec,
   runMessageSuggesterServiceEmptyResponseSpec,
   runMessageSuggesterServiceInvalidResponseSpec,
   runMessageSuggesterServiceProviderFailureSpec,
@@ -75,6 +77,14 @@ const tests: TestCase[] = [
   {
     name: 'MessageSuggesterService uses fallback when the provider fails',
     run: runMessageSuggesterServiceProviderFailureSpec,
+  },
+  {
+    name: 'MessageSuggesterService reuses cached provider responses for equivalent inputs',
+    run: runMessageSuggesterServiceCacheHitSpec,
+  },
+  {
+    name: 'MessageSuggesterService does not cache fallback responses',
+    run: runMessageSuggesterServiceDoesNotCacheFallbackSpec,
   },
   {
     name: 'MessageSuggesterService uses fallback when the provider returns an empty list',
