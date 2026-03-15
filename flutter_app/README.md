@@ -16,11 +16,11 @@ O projeto Flutter esta configurado para usar `FVM`.
 Configuracao atual:
 
 - arquivo: `.fvmrc`
-- canal definido: `stable`
+- versao definida: `3.38.0`
 
 Durante o desenvolvimento desta solucao, a versao utilizada foi:
 
-- `Flutter 3.35.5`
+- `Flutter 3.38.0`
 
 Recomendacao:
 
@@ -44,8 +44,8 @@ dart pub global activate fvm
 Baixe e selecione a versao do projeto:
 
 ```bash
-fvm install stable
-fvm use stable
+fvm install 3.38.0
+fvm use 3.38.0
 ```
 
 Instale as dependencias:

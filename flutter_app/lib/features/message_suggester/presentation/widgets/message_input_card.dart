@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/app_theme.dart';
 import '../message_suggester_constants.dart';
 
 class MessageInputCard extends StatelessWidget {
@@ -102,10 +101,7 @@ class MessageInputCard extends StatelessWidget {
 }
 
 class _ExampleChip extends StatelessWidget {
-  const _ExampleChip({
-    required this.label,
-    required this.onTap,
-  });
+  const _ExampleChip({required this.label, required this.onTap});
 
   final String label;
   final VoidCallback onTap;

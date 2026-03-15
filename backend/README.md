@@ -31,8 +31,13 @@ cp .env.example .env
 Preencha pelo menos:
 
 ```env
-GEMINI_API_KEY=sua_chave_aqui (se nao conseguirem gerar uma chave do Gemini, podem solicitá-la por e-mail; a versao gratuita ja e suficiente para este projeto)
+GEMINI_API_KEY=sua_chave_aqui
 ```
+
+Observacao:
+
+- se nao conseguirem gerar uma chave do Gemini, ela pode ser solicitada por e-mail
+- a versao gratuita ja e suficiente para este projeto
 
 Suba o servidor:
 
@@ -74,8 +79,8 @@ Camadas:
 
 - `app.ts`: composicao do Express, CORS, rate limit e middlewares
 - `config/`: env e regras de CORS
-- `middlewares/`: request id, erro global, not found
-- `modules/message-suggester/`: schema, controller, service, fallback
+- `middlewares/`: request id, erro global e not found
+- `modules/message-suggester/`: schema, controller, service e fallback
 - `providers/llm/`: cliente Gemini
 - `utils/cache.ts`: cache em memoria com TTL
 
