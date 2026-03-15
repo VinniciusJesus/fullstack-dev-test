@@ -4,7 +4,7 @@ Este repositorio contem a solucao fullstack para o desafio de gerar sugestoes cu
 
 Demonstracao:
 
-![Demonstracao do projeto](assets/message-suggester-flow.png)
+![Demonstracao do projeto](demonstracao.png)
 
 Estrutura:
 
